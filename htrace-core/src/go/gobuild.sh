@@ -46,6 +46,7 @@ export GOBIN="${SCRIPT_DIR}/build"
 mkdir -p "${GOBIN}" || die "failed to mkdir -p ${GOBIN}"
 cd "${GOBIN}" || die "failed to cd to ${SCRIPT_DIR}"
 export GOPATH="${GOBIN}:${SCRIPT_DIR}"
+echo "GOPATH=$GOPATH"
 
 # Check for go
 which go &> /dev/null
@@ -94,6 +95,7 @@ install)
 
     # Download dependencies into the build directory.
     echo "godep restore..."
+    cd ..
     godep restore || die "failed to set up dependencies"
     go run "$SCRIPT_DIR/src/org/apache/htrace/bundler/bundler.go" \
         --src="$SCRIPT_DIR/../web/" --dst="$SCRIPT_DIR/src/org/apache/htrace/resource/" \
